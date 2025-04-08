@@ -11,28 +11,42 @@ import com.likhith.repository.UserRepository;
 
 @Service
 public class UserService {
-		@Autowired
-		UserRepository userDAO;
+	
+	@Autowired
+	UserRepository userDAO;
+	
+	public List<UserEntity> getAllUsers(){
+		List<UserEntity> users=userDAO.findAll();
+		return users;
+	}
+	
+	public UserEntity getUserById(int userId) {
+		Optional<UserEntity> user = userDAO.findById(userId);
+		return user.get();
+	}
+	
+	public boolean registerUser(UserEntity user){
+			
+		UserEntity savedUser= userDAO.save(user); 
 		
-		public List<UserEntity> getAllUsers(){
-			List<UserEntity> users=userDAO.findAll();
-			return users;
+		if(savedUser!=null) {
+			return true;
+		}else {
+			return false;
 		}
 		
-		public UserEntity getUserById(int userId) {
-			Optional<UserEntity> user = userDAO.findById(userId);
-			return user.get();
+	}
+	
+	public UserEntity validateUser(String username,String password) {
+		
+		//existingUSer - if the user exists in the db or not
+		Optional<UserEntity> existingUser=userDAO.findByuser_nameAndpassword(username, password);
+		
+		if(existingUser.isPresent()) {
+			return existingUser.get();
+		}else {
+			return null;
 		}
 		
-		
-	/*	public UserEntity validateUser(String username,String password) {
-			Optional<UserEntity> existingUser=userDAO.findByUserNameAndPassword(username, password);
-			
-			if(existingUser.isPresent()) {
-				return existingUser.get();
-			}else {
-				return null;
-			}
-			
-		}*/	
+	}
 }
