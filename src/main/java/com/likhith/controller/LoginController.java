@@ -34,8 +34,8 @@ public class LoginController {
 			UserEntity loggedInUser=userService.validateUser(username, password);
 			
 			if(loggedInUser!=null) {
-				session.setAttribute("userId", loggedInUser.getUser_id());
-				session.setAttribute("username", loggedInUser.getUser_name());
+				session.setAttribute("userId", loggedInUser.getUserId());
+				session.setAttribute("username", loggedInUser.getLastName());
 				
 				return "redirect:/dashboard";
 			}else {

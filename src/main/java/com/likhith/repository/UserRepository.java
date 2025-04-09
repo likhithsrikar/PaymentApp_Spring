@@ -10,9 +10,5 @@ import com.likhith.entities.UserEntity;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
-
-Optional<UserEntity> findByuser_nameAndpassword(String username, String password);
-	
-	
-	
+    Optional<UserEntity> findByUserNameAndPassword(String userName, String password);
 }
